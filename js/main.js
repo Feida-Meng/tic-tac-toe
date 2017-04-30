@@ -34,6 +34,8 @@ $(function(){
 
           if ( $(firstRow[a]).text() === $(firstRow[a+1]).text() && $(firstRow[a+1]).text() === $(firstRow[a+2]).text() ) {
             $('.winner').text('Winner is: '+ $(firstRow[a]).text());
+          } else if ( $(firstRow[a]).text() === $(secondRow[a]).text() && $(secondRow[a]).text() === $(thirdRow[a]).text() ){
+            $('.winner').text('Winner is: '+ $(firstRow[a]).text());
           }
 
 
