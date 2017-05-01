@@ -38,7 +38,8 @@ $(function(){
         //   console.log('m+1: ' + (col+3*row+1) + ' is'+ $(moves[col+3*row+1]).text() +($(moves[col+3*row]).text() === $(moves[col+3*row+1]).text()));
         //   console.log('m+2: ' + (col+3*row+2) + ' is'+ $(moves[col+3*row+2]).text() +($(moves[col+3*row]+1).text() === $(moves[col+3*row+2]).text()));
         // }
-        var condition1 = ( $(moves[(col+3*row)]).text() !=="" && ( $(moves[(col+3*row)]).text() === $(moves[(col+3*row+1)]).text() ) && ( $(moves[(col+3*row+1)]).text() === $(moves[col+3*row+2]).text() ) );
+        var horizontalCondition = ( $(moves[(col+3*row)]).text() !=="" && ( $(moves[(col+3*row)]).text() === $(moves[(col+3*row+1)]).text() ) && ( $(moves[(col+3*row+1)]).text() === $(moves[col+3*row+2]).text() ) );
+        var verticalCondition = ( $(moves[(col+3*row)]).text() !=="" && ( $(moves[(col+3*(row))]).text() === $(moves[(col+3*(row+1))]).text() ) && ( $(moves[(col+3*(row+1))]).text() === $(moves[(col+3*(row+2))]).text() ) );
         // console.log('col: '+ col + ' row: ' + row + ' move : ' + $(moves[col+3*row]).text());
         // console.log('condition: ' + condition1);
         // console.log('condition1 : ' + (col === 0));
@@ -47,7 +48,7 @@ $(function(){
         // console.log('m+2: '+(col+3*row+2) + ' condition3 : ' + ( $(moves[(col+3*row+1)]).text() === $(moves[col+3*row+2]).text() ));
         // }
 
-        if (condition1) {
+        if (horizontalCondition || verticalCondition) {
           $('.winner').text('Winner is: '+ $(moves[(col+3*row)]).text() );
           console.log('Winner is: '+ $(moves[(col+3*row)]).text());
           break;
