@@ -11,7 +11,6 @@ $(function(){
     $(moves[i]).text("");
   }
 
-
   $('.board').on('click', '.user-input', function() {
 
     if ( won === false && $(this).text() === "" ) {
@@ -35,21 +34,9 @@ $(function(){
 
         var m  = $(moves[col+3*row]).text();
         var horizontalCondition   = ( col === 0 && m !=="" && ( m === $(moves[col+1+3*row]).text() ) && ( $(moves[col+1+3*row]).text() === $(moves[col+2+3*row]).text() ) );
-        // if (horizontalCondition) {
-        //   console.log('H row: ' + row + ' col: '+ col + ' condition1: '+ m + ' condition2 :' + ( m === $(moves[col+1+3*row]).text() ) + " condition3: "+ ( $(moves[col+1+3*row]).text() === $(moves[col+2+3*row]).text() ));
-        // }
         var verticalCondition     = ( row === 0 && m !=="" && ( m === $(moves[col+3*(row+1)]).text() ) && ( $(moves[col+3*(row+1)]).text() === $(moves[col+3*(row+2)]).text() ) );
-        // if (verticalCondition) {
-        //   console.log('V row: ' + row + ' col: '+ col +' condition1: '+ m + ' condition2 :' + ( m === $(moves[col+3*(row+1)]).text() ) + " condition3: "+ ( $(moves[col+3*(row+1)]).text() === $(moves[col+3*(row+2)]).text() ) );
-        // }
         var leftDiagnalCondition  = ( col===0 && row === 0 && m !=="" && ( m === $(moves[col+1+3*(row+1)]).text() ) && ( $(moves[col+1+3*(row+1)]).text() === $(moves[col+2+3*(row+2)]).text() ) );
-        // if (leftDiagnalCondition) {
-        //   console.log('L row: ' + row + ' col: '+ col +' condition1: '+ m + ' condition2 :' + ( m === $(moves[col+1+3*(row+1)]).text() ) + " condition3: "+ ( $(moves[col+1+3*(row+1)]).text() === $(moves[col+2+3*(row+2)]).text() ) );
-        // }
         var rightDiagnalCondition = ( col===2 && row === 0 && m !=="" && ( m === $(moves[col-1+3*(row+1)]).text() ) && ( $(moves[col-1+3*(row+1)]).text() === $(moves[col-2+3*(row+2)]).text() ) );
-        // if (rightDiagnalCondition) {
-          // console.log('R row: ' + row + ' col: '+ col +' condition1: '+ ()m + ' condition2 :' + ( m === $(moves[col-1+3*(row+1)]).text() ) + " condition3: "+ ( $(moves[col-1+3*(row+1)]).text() === $(moves[col-2+3*(row+2)]).text() ) );
-        // }
 
         if (horizontalCondition || verticalCondition || leftDiagnalCondition || rightDiagnalCondition) {
           $('.winner').text('Winner is: '+ $(moves[(col+3*row)]).text() );
