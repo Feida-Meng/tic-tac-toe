@@ -4,14 +4,15 @@ $(function(){
   var x = 'X';
   var numX = 0;
   var numO = 0;
-  var firstRow  = $('.first-row h1');
-  var secondRow = $('.second-row h1');
-  var thirdRow = $('.third-row h1');
-  // var start = ox[Math.floor((Math.random()))];
+  var moves  = $('.box h1');
+  for (var i=0;i<9;i++) {
+    $(moves[i]).text("");
+  }
+
 
   $('.board').on('click', '.user-input', function() {
 
-    if ( $(this).text() !== x && $(this).text() !== o ) {
+    if ( $(this).text() === "" ) {
       if ( numX > numO ) {
         $(this).text(o);
         numO ++;
@@ -28,21 +29,33 @@ $(function(){
 
   function winner() {
 
-    for (var a = 0;a < 3;a++) {
-      for (var b =0;b < 3;b++) {
-        for (var c = 0;c < 3;c++) {
+    var row = 0;
+    var col = 0;
+    for (row = 0; row < 3; row ++) {
+      for (col = 0; col < 3; col ++) {
+        // if (col === 0) {
 
-          if ( $(firstRow[a]).text() === $(firstRow[a+1]).text() && $(firstRow[a+1]).text() === $(firstRow[a+2]).text() ) {
-            $('.winner').text('Winner is: '+ $(firstRow[a]).text());
-          } else if ( $(firstRow[a]).text() === $(secondRow[a]).text() && $(secondRow[a]).text() === $(thirdRow[a]).text() ){
-            $('.winner').text('Winner is: '+ $(firstRow[a]).text());
-          }
+        //   console.log('m+1: ' + (col+3*row+1) + ' is'+ $(moves[col+3*row+1]).text() +($(moves[col+3*row]).text() === $(moves[col+3*row+1]).text()));
+        //   console.log('m+2: ' + (col+3*row+2) + ' is'+ $(moves[col+3*row+2]).text() +($(moves[col+3*row]+1).text() === $(moves[col+3*row+2]).text()));
+        // }
+        var condition1 = ( $(moves[(col+3*row)]).text() !=="" && ( $(moves[(col+3*row)]).text() === $(moves[(col+3*row+1)]).text() ) && ( $(moves[(col+3*row+1)]).text() === $(moves[col+3*row+2]).text() ) );
+        // console.log('col: '+ col + ' row: ' + row + ' move : ' + $(moves[col+3*row]).text());
+        // console.log('condition: ' + condition1);
+        // console.log('condition1 : ' + (col === 0));
+        // if (col === 0) {
+        // console.log('m+1: '+(col+3*row+1) + ' condition2 : ' + ( $(moves[(col+3*row)]).text() === $(moves[(col+3*row+1)]).text() ));
+        // console.log('m+2: '+(col+3*row+2) + ' condition3 : ' + ( $(moves[(col+3*row+1)]).text() === $(moves[col+3*row+2]).text() ));
+        // }
 
-
+        if (condition1) {
+          $('.winner').text('Winner is: '+ $(moves[(col+3*row)]).text() );
+          console.log('Winner is: '+ $(moves[(col+3*row)]).text());
+          break;
         }
       }
     }
   }
+
 
 });
 
