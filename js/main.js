@@ -5,6 +5,8 @@ $(function(){
   var numX = 0;
   var numO = 0;
   var moves  = $('.box h1');
+  var won = false;
+
   for (var i=0;i<9;i++) {
     $(moves[i]).text("");
   }
@@ -12,12 +14,11 @@ $(function(){
 
   $('.board').on('click', '.user-input', function() {
 
-    if ( $(this).text() === "" ) {
+    if ( won === false && $(this).text() === "" ) {
       if ( numX > numO ) {
         $(this).text(o);
         numO ++;
         winner();
-
       } else {
         $(this).text(x);
         numX ++;
@@ -29,37 +30,40 @@ $(function(){
 
   function winner() {
 
-    var row = 0;
-    var col = 0;
-    for (row = 0; row < 3; row ++) {
-      for (col = 0; col < 3; col ++) {
-        // if (col === 0) {
+    for (var row = 0; row < 3; row ++) {
+      for (var col = 0; col < 3; col ++) {
 
-        //   console.log('m+1: ' + (col+3*row+1) + ' is'+ $(moves[col+3*row+1]).text() +($(moves[col+3*row]).text() === $(moves[col+3*row+1]).text()));
-        //   console.log('m+2: ' + (col+3*row+2) + ' is'+ $(moves[col+3*row+2]).text() +($(moves[col+3*row]+1).text() === $(moves[col+3*row+2]).text()));
+        var m  = $(moves[col+3*row]).text();
+        var horizontalCondition   = ( col === 0 && m !=="" && ( m === $(moves[col+1+3*row]).text() ) && ( $(moves[col+1+3*row]).text() === $(moves[col+2+3*row]).text() ) );
+        // if (horizontalCondition) {
+        //   console.log('H row: ' + row + ' col: '+ col + ' condition1: '+ m + ' condition2 :' + ( m === $(moves[col+1+3*row]).text() ) + " condition3: "+ ( $(moves[col+1+3*row]).text() === $(moves[col+2+3*row]).text() ));
         // }
-        var horizontalCondition = ( $(moves[(col+3*row)]).text() !=="" && ( $(moves[(col+3*row)]).text() === $(moves[(col+3*row+1)]).text() ) && ( $(moves[(col+3*row+1)]).text() === $(moves[col+3*row+2]).text() ) );
-        var verticalCondition = ( $(moves[(col+3*row)]).text() !=="" && ( $(moves[(col+3*(row))]).text() === $(moves[(col+3*(row+1))]).text() ) && ( $(moves[(col+3*(row+1))]).text() === $(moves[(col+3*(row+2))]).text() ) );
-        // console.log('col: '+ col + ' row: ' + row + ' move : ' + $(moves[col+3*row]).text());
-        // console.log('condition: ' + condition1);
-        // console.log('condition1 : ' + (col === 0));
-        // if (col === 0) {
-        // console.log('m+1: '+(col+3*row+1) + ' condition2 : ' + ( $(moves[(col+3*row)]).text() === $(moves[(col+3*row+1)]).text() ));
-        // console.log('m+2: '+(col+3*row+2) + ' condition3 : ' + ( $(moves[(col+3*row+1)]).text() === $(moves[col+3*row+2]).text() ));
+        var verticalCondition     = ( row === 0 && m !=="" && ( m === $(moves[col+3*(row+1)]).text() ) && ( $(moves[col+3*(row+1)]).text() === $(moves[col+3*(row+2)]).text() ) );
+        // if (verticalCondition) {
+        //   console.log('V row: ' + row + ' col: '+ col +' condition1: '+ m + ' condition2 :' + ( m === $(moves[col+3*(row+1)]).text() ) + " condition3: "+ ( $(moves[col+3*(row+1)]).text() === $(moves[col+3*(row+2)]).text() ) );
+        // }
+        var leftDiagnalCondition  = ( col===0 && row === 0 && m !=="" && ( m === $(moves[col+1+3*(row+1)]).text() ) && ( $(moves[col+1+3*(row+1)]).text() === $(moves[col+2+3*(row+2)]).text() ) );
+        // if (leftDiagnalCondition) {
+        //   console.log('L row: ' + row + ' col: '+ col +' condition1: '+ m + ' condition2 :' + ( m === $(moves[col+1+3*(row+1)]).text() ) + " condition3: "+ ( $(moves[col+1+3*(row+1)]).text() === $(moves[col+2+3*(row+2)]).text() ) );
+        // }
+        var rightDiagnalCondition = ( col===2 && row === 0 && m !=="" && ( m === $(moves[col-1+3*(row+1)]).text() ) && ( $(moves[col-1+3*(row+1)]).text() === $(moves[col-2+3*(row+2)]).text() ) );
+        // if (rightDiagnalCondition) {
+          // console.log('R row: ' + row + ' col: '+ col +' condition1: '+ ()m + ' condition2 :' + ( m === $(moves[col-1+3*(row+1)]).text() ) + " condition3: "+ ( $(moves[col-1+3*(row+1)]).text() === $(moves[col-2+3*(row+2)]).text() ) );
         // }
 
-        if (horizontalCondition || verticalCondition) {
+        if (horizontalCondition || verticalCondition || leftDiagnalCondition || rightDiagnalCondition) {
           $('.winner').text('Winner is: '+ $(moves[(col+3*row)]).text() );
-          console.log('Winner is: '+ $(moves[(col+3*row)]).text());
+          won = true;
+
           break;
         }
       }
     }
+
+    if (numX === 5 && won === false) {
+      $('.winner').text("It's a draw" );
+
+    }
   }
 
-
 });
-
-//1st f[0] f[1] f[2]
-//2nd s[0] s[1] s[2]
-//3rd t[0] t[1] t[2]
